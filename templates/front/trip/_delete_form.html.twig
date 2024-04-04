@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('app_trip_delete', {'id': trip.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trip.id) }}">
+	<div class="flex justify-center items-center">
+		<button class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800" class="btn">Supprimer</button>
+	</div>
+</form>

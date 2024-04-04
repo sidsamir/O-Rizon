@@ -1,0 +1,68 @@
+{% block form %}
+    <div class="max-w-4xl mx-auto mt-10">
+        {{ form_start(form, {'attr': {'class': 'bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'}}) }}
+
+        <div class="mb-4">
+            {{ form_label(form.title, 'Titre du voyage', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+            {{ form_widget(form.title, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline', 'style': 'border-color: #4FD1C5;'}}) }}
+        </div>
+
+        <div class="mb-4">
+            {{ form_label(form.description, 'Description', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+            {{ form_widget(form.description, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline', 'style': 'border-color: #4FD1C5;'}}) }}
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.budget, 'Budget (€)', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+            {{ form_widget(form.budget, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline', 'style': 'border-color: #4FD1C5;'}}) }}
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.status, 'Statut du voyage', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+            {{ form_widget(form.status, {'attr': {'class': 'block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline', 'style': 'border-color: #63b3ed;'}}) }}
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.country, 'Pays', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+            {{ form_widget(form.country, {'attr': {'class': 'block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline', 'style': 'border-color: #63b3ed;'}}) }}
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.imageFile, 'Image', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+            {{ form_widget(form.imageFile, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline', 'style': 'border-color: #4FD1C5;'}}) }}
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.imageFile, 'Ville', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+            {{ form_widget(form.city, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline', 'style': 'border-color: #4FD1C5;'}}) }}
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.address, 'Adresse', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+            {{ form_widget(form.address, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline', 'style': 'border-color: #4FD1C5;'}}) }}
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.date, 'Date', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+            {{ form_widget(form.date, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline', 'style': 'border-color: #4FD1C5;'}}) }}
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.participants, 'Participants', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+            {{ form_widget(form.participants, {'attr': {'class': 'shadow multiple-select appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline', 'style': 'border-color: #4FD1C5;'}}) }}
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.tags, 'Tags', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+            {{ form_widget(form.tags, {'attr': {'class': 'shadow multiple-select appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline', 'style': 'border-color: #4FD1C5;'}}) }}
+        </div>
+
+        <div class="flex justify-center mt-8">
+            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                {{ button_label|default('Soumettre') }}
+            </button>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

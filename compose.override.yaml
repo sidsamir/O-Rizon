@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+  phpqa:
+    environment:
+      - XDEBUG_MODE=off
+    volumes:
+      - .:/project
+      - ./path/to/local/php.ini:/usr/local/etc/php/conf.d/custom-php.ini:ro
+###> symfony/mercure-bundle ###
+  mercure:
+    ports:
+      - "8080:8080"
+###< symfony/mercure-bundle ###

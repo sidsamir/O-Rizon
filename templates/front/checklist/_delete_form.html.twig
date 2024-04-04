@@ -1,0 +1,8 @@
+<form method="post" action="{{ path('app_checklist_delete', {'id': checklist.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ checklist.id) }}">
+
+	<div class="flex justify-center items-center">
+		<button class="flex center-item bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-full mt-4 mb-2 text-xl pl-20 pr-20" class="btn">Supprimer</button>
+	</div>
+
+</form>

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes amis{% endblock %}
+
+{% block body %}
+    <!-- Section En-tête avec un Dégradé de Fond Dynamique -->
+    <div class="bg-gradient-to-r from-blue-400 to-teal-500 text-white py-10">
+        <div class="container mx-auto px-4">
+            <h1 class="text-center text-4xl sm:text-5xl font-extrabold">Mes Amis</h1>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div x-data="{ showModal: false }" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% set displayedFriends = [] %}
+            {% for friendship in acceptedFriendships %}
+                {% set friend = friendship.requester == app.user ? friendship.receiver : friendship.requester %}
+                {% if friend.id not in displayedFriends %}
+                    {% set displayedFriends = displayedFriends|merge([friend.id]) %}
+                    <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
+                        <div class="px-6 py-4 flex items-center">
+                            <img src="https://i.pravatar.cc/150?u={{ friend.id }}" alt="Avatar de {{ friend.username }}" class="h-10 w-10 rounded-full mr-4">
+                            <div>
+                                <h3 class="font-bold text-xl mb-2">{{ friend.username }}</h3>
+                                <p class="text-gray-700 text-base mb-4">
+                                    Ami depuis le : {{ friendship.friendAt|date('Y-m-d') }}
+                                </p>
+                                <a href="{{ path('app_user_show', {'id': friend.id}) }}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition-colors duration-150">
+                                    Voir le profil
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

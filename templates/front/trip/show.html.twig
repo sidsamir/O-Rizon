@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Trip{% endblock %}
+
+{% block body %}
+
+	<!-- Section En-tête avec Dégradé de Fond -->
+	<div class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-8">
+		<div class="container mx-auto px-4">
+			<h1 class="text-center text-5xl font-bold">Détails du Trip</h1>
+		</div>
+	</div>
+
+	<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+		<div class="bg-white rounded-lg shadow-xl overflow-hidden mb-8">
+			<div class="flex justify-center">
+				<img src="{{ vich_uploader_asset(trip, 'imageFile') }}" alt="Image de {{ trip.title }}" class="max-w-full h-auto rounded-lg">
+			</div>
+		</div>
+
+		<div class="bg-white rounded-lg shadow-xl p-6 mb-8">
+			<h2 class="text-3xl font-bold text-green-600 mb-4">{{ trip.title }}</h2>
+			<p class="text-gray-700 mb-4">{{ trip.description }}</p>
+
+			<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-8">
+				<!-- Dynamically generated trip details go here -->
+				<div class="sm:col-span-1"><dt class="font-medium text-gray-500">Budget :</dt><dd>{{ trip.budget }} €</dd></div>
+				<!-- Additional trip details -->
+			</dl>
+		</div>
+
+		<div class="flex justify-around space-x-4">
+			<a href="{{ path('app_trip_edit', {'id': trip.id}) }}" class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-full">Modifier</a>
+			{{ include('front/trip/_delete_form.html.twig') }}
+			<a href="{{ path('app_trip_index') }}" class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-full">Retour à la liste</a>
+		</div>
+	</div>
+{% endblock %}

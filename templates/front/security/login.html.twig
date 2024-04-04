@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+
+    <div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
+                Connexion
+            </h2>
+        </div>
+
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                <form method="post" class="space-y-6">
+
+                    {% if app.user %}
+                        <div class="mb-3">
+                            Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}" class="text-green-600 hover:text-green-500">Déconnexion</a>
+                        </div>
+                    {% endif %}
+                    <label for="inputEmail" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="email">
+
+                    <div>
+                        <label for="inputPassword" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+                        <input type="password" name="password" id="inputPassword" autocomplete="current-password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm" placeholder="Mot de passe">
+                    </div>
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                    <div>
+                        <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            Se connecter
+                        </button>
+                    </div>
+
+                    <div class="text-sm">
+                        <a href="{{ path('app_register') }}" class="font-medium text-green-600 hover:text-green-500">
+                            Pas encore inscrit ? S'inscrire
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Trip{% endblock %}
+
+{% block body %}
+
+    <!-- Section En-tête avec Dégradé de Fond -->
+    <div class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-8">
+        <h1 class="text-center text-5xl font-bold">Modifiez votre Trip</h1>
+    </div>
+
+    <!-- Section Formulaire d'Édition -->
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white rounded-lg shadow-xl overflow-hidden p-6">
+            <h2 class="text-3xl font-bold text-green-600 mb-6">Une modification ? C'est par ici !</h2>
+            <!-- Formulaire de Modification de Voyage -->
+            {{ include('front/trip/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+        </div>
+
+        <!-- Bouton de Suppression -->
+        <div class="mt-6 flex justify-center">
+            {{ include('front/trip/_delete_form.html.twig') }}
+        </div>
+
+
+        <!-- Lien Retour à la Liste des Voyages -->
+        <div class="mt-6 text-center">
+            <a href="{{ path('app_trip_index') }}" class="text-green-600 hover:text-green-800">Retour à la liste</a>
+        </div>
+    </div>
+
+{% endblock %}

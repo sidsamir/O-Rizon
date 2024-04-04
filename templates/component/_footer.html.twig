@@ -1,0 +1,124 @@
+{% if app.user %}
+        {% set isBoardPage = '/board' in app.request.pathInfo %}
+
+        {% if not isBoardPage %}
+    <div x-data="{ open: false, openAddModal: false }" class="relative">
+        <!-- Bouton "Ma checklist" -->
+        <button @click="open = true"
+                class="fixed bottom-20 left-4 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full flex items-center justify-center shadow-lg transition duration-300 ease-in-out transform hover:scale-110"
+                style="background-color: rgba(16, 185, 129, 0.85);">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+        </button>
+
+
+        <!-- Modal Checklist -->
+        <div x-show="open" @click.away="open = false" x-transition:enter="ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="ease-in duration-300" x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-90"
+             class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
+            <div class="bg-white rounded-lg shadow-2xl overflow-hidden w-full max-w-3xl mx-auto my-8">
+                <div class="p-6">
+                    <div class="flex justify-center items-center bg-green-100 pt-4 pb-6 rounded-md">
+                        <h2 class="text-4xl font-bold text-green-500 sm:text-4xl transition duration-300 ease-in-out transform hover:scale-105">Votre Checklist</h2>
+                    </div>
+                    {% if checklists is empty %}
+                        <p class="text-center text-gray-600 mt-4">Pas encore de checklist privée.</p>
+                    {% else %}
+                        <div class="mt-4 overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Tâche
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        État
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-300">
+                                {% for checklist in checklists %}
+                                    <tr class="hover:bg-gray-100 transition duration-150 ease-in-out">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ checklist.task }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="toggle-state" data-id="{{ checklist.id }}" data-check-url="{{ asset('images/check.png') }}" data-uncheck-url="{{ asset('images/uncheck.png') }}">
+                                                <img src="{{ checklist.state == 0 ? asset('images/uncheck.png') : asset('images/check.png') }}"
+                                                     alt="{{ checklist.state == 0 ? 'Pas encore fait' : 'Fait' }}"
+                                                     class="w-6 h-6 hover:scale-110 transition-transform duration-200 ease-in-out">
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <a href="#" class="text-red-600 hover:text-red-900 delete-task" data-id="{{ checklist.id }}">Supprimer</a>
+                                        </td>
+
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                    <!-- Bouton pour ouvrir la modal d'ajout d'une nouvelle tâche -->
+                    <!-- Assurez-vous que ce bouton est à l'intérieur du même élément qui a le x-data="{ open: false, openAddModal: false }" défini -->
+                    <button @click="openAddModal = true" class="px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Ajouter une nouvelle tâche
+                    </button>
+
+
+
+                </div>
+                <button @click="open = false" class="absolute top-0 right-0 m-4 text-gray-600 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Modal d'ajout -->
+        <div x-show="openAddModal" @click.away="openAddModal = false"
+             class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
+            <div class="bg-white rounded-lg shadow-xl overflow-hidden w-full max-w-md">
+                <div class="p-6">
+                    <!-- Le formulaire sera chargé ici via JavaScript -->
+                    <div id="addChecklistForm">
+                        {{ form(formChecklist, { action: path('app_checklist_new') }) }}
+                    </div>
+                </div>
+                <div class="flex justify-end p-6">
+                    <button @click="openAddModal = false"
+                            class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded">Fermer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+        {% endif %}
+
+<footer class="bg-white">
+    <div class="max-w-6xl mx-auto px-4 py-6">
+        <div class="flex justify-between items-center">
+            <div class="text-sm text-gray-700">
+                <a href="{{ path('app_main_contact') }}" class="hover:text-green-500 transition duration-300">Contact</a> |
+                <a href="{{ path('app_main_faq') }}" class="hover:text-green-500 transition duration-300">FAQ</a> |
+                <a href="{{ path('app_main_mentions') }}" class="hover:text-green-500 transition duration-300">Mentions légales</a>
+            </div>
+            <div class="text-sm text-gray-700">
+                O'Rizon™ All Rights Reserved
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+{% block javascripts %}
+    <script src="{{ asset('js/checklistState.js') }}"></script>
+{% endblock %}

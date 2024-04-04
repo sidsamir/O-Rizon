@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Post{% endblock %}
+
+{% block body %}
+    <!-- Section Titre avec Dégradé de Fond -->
+    <div class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-8">
+        <h1 class="text-center text-5xl font-bold">Créez votre post</h1>
+    </div>
+
+    <!-- Conteneur Principal pour le Formulaire -->
+    <div class="container mx-auto px-4 py-16 mt-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-lg shadow-xl p-6">
+            <h2 class="text-3xl font-semibold mb-6">Détails du post</h2>
+            <!-- Inclut le formulaire de création de post -->
+            {{ include('front/post/_form.html.twig') }}
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <!-- Lien de retour vers la liste des posts -->
+                <div class="flex justify-center mt-8">
+                    <a href="{{ path('app_post_index') }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-500 hover:bg-green-700">
+                        Retour à la liste
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

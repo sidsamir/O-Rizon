@@ -1,0 +1,17 @@
+{
+  "name": "projet-o-rizon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/O-clock-Fajitas/projet-o-rizon.git"
+  },
+  "private": true,
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2"
+  }
+}

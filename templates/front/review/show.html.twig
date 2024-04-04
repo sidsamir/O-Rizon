@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la review{% endblock %}
+
+{% block body %}
+
+    <!-- Titre de la page listant les articles -->
+    <div class="flex justify-center items-center bg-green-100 pt-4 pb-6">
+        <h1 class="text-4xl font-bold text-green-500 sm:text-4xl">Détails de la review</h1>
+    </div>
+
+    <!-- Contenu de la page -->
+    <div class="flex flex-col mx-auto max-w-screen-xl px-4 py-16 mt-4 sm:px-6 lg:px-8 overflow-hidden bg-white rounded-lg shadow-xl">
+        <!-- Affichage des détails de la review -->
+        <div class="p-6 bg-white border-b border-gray-200">
+            <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-8">
+                <div class="sm:col-span-1">
+                    <dt class="font-medium text-gray-500">Id :</dt>
+                    <dd class="mt-1 text-gray-900">{{ review.id }}</dd>
+                </div>
+                <div class="sm:col-span-1">
+                    <dt class="font-medium text-gray-500">Titre :</dt>
+                    <dd class="mt-1 text-gray-900">{{ review.title }}</dd>
+                </div>
+                <div class="sm:col-span-1">
+                    <dt class="font-medium text-gray-500">Summary :</dt>
+                    <dd class="mt-1 text-gray-900">{{ review.summary ? 'Oui' : 'Non' }}</dd>
+                </div>
+                <div class="sm:col-span-1">
+                    <dt class="font-medium text-gray-500">Créé le :</dt>
+                    <dd class="mt-1 text-gray-900">{{ review.createdAt ? review.createdAt|date('Y-m-d H:i:s') : '' }}</dd>
+                </div>
+                <div class="sm:col-span-1">
+                    <dt class="font-medium text-gray-500">Mis à jour le :</dt>
+                    <dd class="mt-1 text-gray-900">{{ review.updatedAt ? review.updatedAt|date('Y-m-d H:i:s') : '' }}</dd>
+                </div>
+            </dl>
+
+            <!-- Liens de navigation -->
+            <div class="flex justify-center items-center mt-8">
+                <a href="{{ path('app_front_review_edit', {'id': review.id}) }}" class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-full mt-4 mb-2 text-xl">Modifier</a>
+                {{ include('front/review/delete.form.html.twig') }}
+                <a href="{{ path('app_front_review_index') }}" class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-full mt-4 mb-2 text-xl">Retour à la liste</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

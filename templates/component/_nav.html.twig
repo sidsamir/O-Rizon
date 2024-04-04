@@ -1,0 +1,137 @@
+<nav x-data="{ open: false, dropdownOpen: false, notificationOpen: false, openprofil: false } "
+     class="bg-white shadow-lg">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between">
+            <div class="flex space-x-7">
+                <!-- Logo / Titre du site -->
+                <div>
+                    <a href="{{ path('app_main_home') }}    " class="flex items-center py-4 px-2 text-green-500">
+                        <span class="font-semibold text-lg">O'Rizon</span>
+                    </a>
+                </div>
+                <!-- Menu principal pour les écrans md et plus -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <!-- Dropdown Menu -->
+                    <div class="relative" x-data="{ dashboardOpen: false }">
+                        <button @click="dashboardOpen = !dashboardOpen"
+                                class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300 flex items-center">
+                            Tableau de bord
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+                            </svg>
+                        </button>
+
+                        {% if app.user %}
+                            <div x-show="dashboardOpen" @click.away="dashboardOpen = false"
+                                 class="absolute bg-white shadow overflow-hidden rounded w-48 mt-2 z-10">
+                                <a href="{{ path('app_main_mytrip') }}"
+                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-500 hover:text-white">Gérer
+                                    mes voyages</a>
+                                <a href="{{ path('app_main_jointrip') }}"
+                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-500 hover:text-white">Participer
+                                    à un voyage</a>
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+                    <div class="relative" x-data="{ openprofil: false }">
+                        <button @click="openprofil = !openprofil"
+                                class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300 flex items-center">
+                            Mon profil
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+                            </svg>
+                        </button>
+                        {% if app.user %}
+                            <div x-show="openprofil" @click.away="openprofil = false"
+                                 class="absolute bg-white shadow overflow-hidden rounded w-48 mt-2 z-50">
+                                <a href="{{ path('app_profile') }}"
+                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-500 hover:text-white">Mon
+                                    profil</a>
+                                <a href="{{ path('app_friends_list') }}"
+                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-500 hover:text-white">Mes
+                                    amis</a>
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                    <a href="{{ path('app_user_index') }}"
+                       class="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Les
+                        voyageurs</a>
+                </div>
+
+                <!-- Mobile menu button -->
+
+            </div>
+            <div class="md:hidden flex  items-center">
+                <button @click="open = !open" class="text-gray-500 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path :class="{'hidden': open, 'block': !open }" class="inline-flex" stroke-linecap="round"
+                              stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        <path :class="{'block': open, 'hidden': !open }" class="hidden" stroke-linecap="round"
+                              stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="hidden md:flex items-center space-x-3">
+                <div class="relative ml-4">
+                    <a href="javascript:void(0)" id="notification-icon"
+                       class="flex items-center justify-center w-8 h-8 text-base font-medium leading-normal text-center align-middle transition-colors duration-150 ease-in-out bg-transparent cursor-pointer rounded-2xl text-stone-500 hover:text-primary active:text-primary focus:text-primary">
+                        <img src="{{ asset('images/bouton-notifications.png') }}" alt="Notifications">
+                        <span id="notification-count"
+                              class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-6 h-6 flex items-center justify-center">0</span>
+                    </a>
+                    <!-- Menu déroulant des notifications -->
+                    <div id="notification-dropdown"
+                         class="hidden absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20">
+                        <div id="message" class="text-center">
+
+                        </div>
+                    </div>
+
+                </div>
+                {% if app.user %}
+                    <a href="{{ path('app_logout') }}"
+                       class="py-2 px-2 font-medium text-gray-500 rounded hover:bg-green-500 hover:text-white transition duration-300">Déconnexion</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}"
+                       class="py-2 px-2 font-medium text-gray-500 rounded hover:bg-green-500 hover:text-white transition duration-300">Connexion</a>
+                    <a href="{{ path('app_register') }}"
+                       class="py-2 px-2 font-medium text-white bg-green-500 rounded hover:bg-green-400 transition duration-300">S'enregistrer</a>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <!-- Mobile Menu -->
+
+        <div :class="{'block': open, 'hidden': !open}" class="md:hidden">
+            <div class="flex flex-col items-center">
+                <a href="{{ path('app_main_home') }}" class="py-2 px-4 text-sm hover:bg-green-500 hover:text-white">Accueil</a>
+                <a href="{{ path('app_main_mytrip') }}" class="py-2 px-4 text-sm hover:bg-green-500 hover:text-white">Gérer
+                    mes voyages</a>
+                <a href="#" class="py-2 px-4 text-sm hover:bg-green-500 hover:text-white">Participer à un voyage</a>
+                <a href="{{ path('app_user_index') }}" class="py-2 px-4 text-sm hover:bg-green-500 hover:text-white">Les
+                    voyageurs</a>
+                <a href="{{ path('app_profile') }}" class="py-2 px-4 text-sm hover:bg-green-500 hover:text-white">Mon
+                    profil</a>
+                {% if app.user %}
+                    <a href="{{ path('app_logout') }}" class="py-2 px-4 text-sm hover:bg-green-500 hover:text-white">Déconnexion</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="py-2 px-4 text-sm hover:bg-green-500 hover:text-white">Connexion</a>
+                    <a href="{{ path('app_register') }}" class="py-2 px-4 text-sm hover:bg-green-500 hover:text-white">S'enregistrer</a>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+{% block javascripts %}
+    {% if app.user %}
+        <script src="{{ asset('js/notification.js') }}"></script>
+    {% endif %}
+{% endblock %}

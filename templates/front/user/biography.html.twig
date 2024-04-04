@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Éditer la biographie{% endblock %}
+
+{% block body %}
+    <!-- Alpine.js pour des fonctionnalités interactives (si nécessaire) -->
+    <script src="//unpkg.com/alpinejs" defer></script>
+
+    <!-- Section En-tête avec Dégradé de Fond Moderne -->
+    <div class="bg-gradient-to-r from-green-500 to-blue-600 text-white py-8">
+        <div class="container mx-auto px-4">
+            <h1 class="text-center text-4xl sm:text-5xl font-bold">Éditer la biographie</h1>
+        </div>
+    </div>
+
+    <div class="container mx-auto mt-10 flex justify-center">
+        <div class="max-w-lg w-full px-4 py-8 bg-white rounded-lg shadow-md">
+            {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+
+            <div>
+                {{ form_label(form.biographie, 'Éditer votre biographie', {'label_attr': {'class': 'block text-gray-700 font-semibold mb-2'}}) }}
+                {{ form_widget(form.biographie, {'attr': {'class': 'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-60'}}) }}
+            </div>
+
+            <!-- Ajoutez d'autres champs du formulaire si nécessaire -->
+
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition ease-in-out duration-150">
+                    Enregistrer
+                </button>
+                <a href="#" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+                    Annuler
+                </a>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

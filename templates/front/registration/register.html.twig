@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Enregistrez-vous{% endblock %}
+
+{% block body %}
+
+    <div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
+                Enregistrez-vous
+            </h2>
+        </div>
+
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                {{ form_start(registrationForm, {'attr': {'class': 'space-y-6'}}) }}
+
+                {{ form_row(registrationForm.lastName, {'attr': {'class': 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm'}}) }}
+
+                {{ form_row(registrationForm.firstName, {'attr': {'class': 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm'}}) }}
+
+                {{ form_row(registrationForm.userName, {'attr': {'class': 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm'}}) }}
+
+                {{ form_row(registrationForm.email, {'attr': {'class': 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm'}}) }}
+
+                {{ form_row(registrationForm.Password, {'attr': {'class': 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm'}, 'label': 'Mot de passe'}) }}
+
+                <div class="flex items-center justify-between">
+                    <div class="text-sm leading-5">
+                        <a href="{{ path('app_login') }}" class="font-medium text-green-600 hover:text-green-500">
+                            Déjà inscrit ? Se connecter
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        S'inscrire
+                    </button>
+                </div>
+
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<!-- Titre de la page listant les Reviews -->
+	<div class="flex flex-col justify-center items-center bg-green-100 pt-4 pb-6 mb-4">
+		<h1 class="text-4xl font-bold text-green-500 sm:text-4xl mb-8">Review du voyage</h1>
+		<h2 class="text-xl text-green-500 mb-4">Liste des reviews</h2>
+	</div>
+
+	<!-- Cartes affichant les détails des Reviews -->
+	<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6 mx-6">
+		{% for review in reviews %}
+			<div class="overflow-hidden bg-white rounded-b-lg shadow-xl">
+				<div class="px-6 py-4">
+					<div class="font-bold text-xl mb-2">{{ review.title }}</div>
+					<p class="text-gray-700 text-base">{{ review.summary }}</p>
+				</div>
+				<div class="px-6 py-4">
+					<span class="inline-block bg-green-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{{ review.createdAt ? review.createdAt|date('Y-m-d H:i:s') : '' }}</span>
+				</div>
+				<div class="px-6 py-4">
+					<a href="{{ path('app_front_review_show', {'id': review.id}) }}" class="text-green-500 hover:text-green-800">Voir plus</a>
+					<a href="{{ path('app_front_review_edit', {'id': review.id}) }}" class="text-green-500 hover:text-green-800 ml-2">Modifier</a>
+				</div>
+			</div>
+		{% else %}
+			<!-- Affiche un message si aucun enregistrement n'est trouvé -->
+			<p>No records found</p>
+		{% endfor %}
+	</div>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Post{% endblock %}
+
+{% block body %}
+    <!-- Titre de la page d'édition d'article -->
+    <div class="">
+        <h1 class="flex justify-center items-center text-4xl font-bold bg-green-100 pt-4 pb-6 text-green-500 sm:text-4xl mb-8">Modifiez votre post</h1>
+    </div>
+
+    <div class="flex mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 overflow-hidden bg-white rounded-lg shadow-xl">
+        <div class="w-full max-w-screen-xl max-h-screen-lg px-4 py-16 sm:px-6 lg:px-8">
+            <h1 class="text-2xl font-bold sm:text-3xl mb-6">Une modification ? C'est par ici !</h1>
+            <!-- Inclut le formulaire de modification d'article avec le label "Update" -->
+            {{ include('front/post/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+            <!-- Inclut le formulaire de suppression d'article -->
+            {{ include('front/post/_delete_form.html.twig') }}
+        </div>
+        <!-- Intégration de l'image -->
+        <div class="hidden lg:block mr-auto max-w-lg">
+            <img src="{{ asset('images/lake.jpg') }}" alt="lake image">
+        </div>
+    </div>
+
+    <div class="flex justify-center items-center">
+        <!-- Lien de retour vers la liste des articles -->
+        <a href="{{ path('app_post_index') }}">back to list</a>
+    </div>
+{% endblock %}

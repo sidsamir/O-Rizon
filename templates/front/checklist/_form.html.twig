@@ -1,0 +1,15 @@
+{{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+
+{{ form_row(form.task, {
+    'label_attr': {'class': 'block text-sm font-semibold text-gray-700'},
+    'attr': {'class': 'form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50', 'placeholder': 'Entrez la tâche...'}
+}) }}
+
+{{ form_row(form.state, {
+    'label_attr': {'class': 'block text-sm font-semibold text-gray-700'},
+    'attr': {'class': 'form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50', 'placeholder': 'Sélectionnez l\'état...'}
+}) }}
+
+
+
+{{ form_end(form) }}

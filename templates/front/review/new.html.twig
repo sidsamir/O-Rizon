@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Review{% endblock %}
+
+{% block body %}
+
+    <div class="">
+        <h1 class="flex justify-center items-center text-4xl font-bold bg-green-100 pt-4 pb-6 text-green-500 sm:text-4xl mb-8">Rédigez votre review</h1>
+    </div>
+
+<div class="flex mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 overflow-hidden bg-white rounded-lg shadow-xl">
+    <div class="w-full max-w-screen-xl max-h-screen-lg px-4 py-16 sm:px-6 lg:px-8">
+        <h1 class="text-2xl font-bold sm:text-3xl mb-6">Votre nouvelle review</h1>
+        <!-- Inclut le formulaire de création de review -->
+        {{ include('front/review/form.html.twig') }}
+
+    </div>
+
+    <div class="hidden lg:flex flex-col justify-center items-center mr-auto max-w-lg">
+        <img src="{{ asset('images/lake.jpg') }}" alt="lake image">
+    </div>
+</div>
+
+{% endblock %}

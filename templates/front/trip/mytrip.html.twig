@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Voyages{% endblock %}
+
+{% block body %}
+
+{# TODO Ajoute {{ vich_uploader_asset(trip, 'imageFile') }} si on veux voir les photos upload la les photos son chargé par les fixtures #}
+
+    <div class="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white py-10">
+        <h1 class="text-center text-6xl font-bold">Mes Voyages</h1>
+        <p class="mt-4 text-center text-xl">Découvrez les voyages que vous avez créés, auxquels vous participez ou que vous planifiez.</p>
+    </div>
+
+    <div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Section Voyages Passés -->
+            <div class="bg-white rounded-lg shadow-xl p-6">
+                <h2 class="text-2xl font-bold text-green-600 mb-4">Voyages Passés</h2>
+                {% if trips|filter(trip => trip.creator is not null and trip.creator.id == app.user.id and trip.status == "Terminé")|length == 0 %}
+                    <p class="text-gray-600">Aucun voyage passé pour le moment.</p>
+                {% else %}
+                    <ul class="space-y-4">
+                        {% for trip in trips %}
+                            {% if trip.creator is not null and trip.creator.id == app.user.id and trip.status == "Terminé" %}
+                                <li>
+                                    <a href="{{ path('app_trip_board', {'id': trip.id}) }}" class="flex items-center space-x-4 hover:text-green-500">
+                                        <img src="{{ trip.imageName }}" alt="{{ trip.title }}" class="w-16 h-16 object-cover rounded-full">
+                                        <div>
+                                            <h3 class="text-lg font-semibold">{{ trip.title }}</h3>
+                                            <p class="text-sm text-gray-600">{{ trip.description|slice(0, 50) }}...</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <!-- Section Voyages En Cours -->
+            <div class="bg-white rounded-lg shadow-xl p-6">
+                <h2 class="text-2xl font-bold text-blue-600 mb-4">Voyages En Cours</h2>
+                {% if trips|filter(trip => trip.creator is not null and trip.creator.id == app.user.id and trip.status == "En cours")|length == 0 %}
+                    <p class="text-gray-600">Aucun voyage en cours pour le moment.</p>
+                {% else %}
+                    <ul class="space-y-4">
+                        {% for trip in trips %}
+                            {% if trip.creator is not null and trip.creator.id == app.user.id and trip.status == "En cours" %}
+                                <li>
+                                    <a href="{{ path('app_trip_board', {'id': trip.id}) }}" class="flex items-center space-x-4 hover:text-blue-500">
+                                        <img src="{{ trip.imageName }}" alt="{{ trip.title }}" class="w-16 h-16 object-cover rounded-full">
+                                        <div>
+                                            <h3 class="text-lg font-semibold">{{ trip.title }}</h3>
+                                            <p class="text-sm text-gray-600">{{ trip.description|slice(0, 50) }}...</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <!-- Section Voyages Futurs -->
+            <div class="bg-white rounded-lg shadow-xl p-6">
+                <h2 class="text-2xl font-bold text-purple-600 mb-4">Voyages Futurs</h2>
+                {% if trips|filter(trip => trip.creator is not null and trip.creator.id == app.user.id and trip.status == "Future")|length == 0 %}
+                    <p class="text-gray-600">Aucun voyage futur pour le moment.</p>
+                {% else %}
+                    <ul class="space-y-4">
+                        {% for trip in trips %}
+                            {% if trip.creator is not null and trip.creator.id == app.user.id and trip.status == "Future" %}
+                                <li>
+                                    <a href="{{ path('app_trip_board', {'id': trip.id}) }}" class="flex items-center space-x-4 hover:text-purple-500">
+                                        <img src="{{ trip.imageName }}" alt="{{ trip.title }}" class="w-16 h-16 object-cover rounded-full">
+                                        <div>
+                                            <h3 class="text-lg font-semibold">{{ trip.title }}</h3>
+                                            <p class="text-sm text-gray-600">{{ trip.description|slice(0, 50) }}...</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="{{ path('app_trip_new') }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">Créer un nouveau voyage</a>
+        </div>
+    </div>
+{% endblock %}

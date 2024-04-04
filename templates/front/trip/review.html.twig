@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reviews du voyage {{ trip.title }}{% endblock %}
+
+{% block body %}
+
+    <!-- Section En-tête avec Dégradé de Fond -->
+    <div class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-8">
+        <div class="container mx-auto px-4">
+            <h1 class="text-center text-5xl font-bold">Reviews du voyage {{ trip.title }}</h1>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Liste des reviews associées à ce voyage -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {% for review in reviews %}
+                <div class="bg-white rounded-lg shadow-xl overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="font-bold text-xl mb-2">{{ review.title }}</h2>
+                        <p class="text-gray-700 text-base mb-4">{{ review.summary }}</p>
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-center text-gray-500 col-span-full">Aucune review trouvée.</p>
+            {% endfor %}
+        </div>
+
+        {% if trip.status == "Terminé" %}
+            <!-- Bouton pour ajouter une nouvelle review -->
+            <div class="flex justify-center mt-8">
+                <a href="{{ path('app_front_review_new', {'id': trip.id}) }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">Nouvelle Review</a>
+            </div>
+        {% endif %}
+
+        <!-- Bouton de retour au tableau de bord du voyage -->
+        <div class="flex justify-center mt-4">
+            <a href="{{ path('app_trip_board', {'id': trip.id}) }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">Retour au tableau de bord</a>
+        </div>
+    </div>
+{% endblock %}

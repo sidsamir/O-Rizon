@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nous contacter{% endblock %}
+
+{% block body %}
+<main class="min-h-screen bg-gradient-to-r from-green-400 to-blue-500">
+    <div class="container mx-auto px-5 py-24">
+        <div class="flex flex-col items-center">
+            <img class="w-1/4 mb-10 object-cover object-center rounded" alt="O'Rizon logo" src="{{ asset('images/ORizon2.png') }}">
+
+            <div class="bg-white bg-opacity-80 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4 text-center">Mentions légales</h2>
+                <p class="text-lg text-gray-600 mb-4">
+                    La société O'Rizon a son siège et est immatriculée à Amsterdam, aux Pays-Bas, d'où elle fournit un service d'organisation de voyage entre particulier sur son site Internet, et est soutenue au niveau mondial par ses bureaux locaux. Ces derniers apportent seulement un support interne à O'Rizon. Ils fournissent le Service et le possèdent, gèrent et n'administrent le Site Internet.
+                </p>
+                <p class="text-lg text-gray-600 mb-4">
+                    Pour toute question au sujet de ORizon.com, du service et du site Internet ou si vous souhaitez envoyer ou signifier des documents, correspondances, notifications ou d'autres communications qui concernent ORizon.com, le Service, le Site Internet, ou pour les demandes presse, veuillez contacter directement O'Rizon.
+                </p>
+                <p class="text-lg text-gray-600">
+                    O'Rizon. n’assume ni n’accepte aucune autre domiciliation dans tout autre lieu, endroit ou bureau dans le monde (ni dans les bureaux de ses bureaux locaux), que celle de son siège social à Amsterdam. Les bureaux locaux n’opèrent pas et ne sont pas autorisés à agir en tant qu’agent agréé ou représentant de service de O'Rizon. Aucune réservation ne peut être réalisée dans ou par l'intermédiaire de ces entreprises.
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

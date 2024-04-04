@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Membres{% endblock %}
+
+{% block body %}
+
+    <div class="flex justify-center items-center bg-gradient-to-r from-green-500 to-blue-600 py-8">
+        <h1 class="text-5xl font-bold text-white">Les voyageurs</h1>
+    </div>
+
+    <main class="min-h-screen bg-cover bg-gradient-to-r from-green-500 to-blue-600">
+        <div class="container mx-auto flex flex-col justify-center items-center py-12">
+            <div class="search-container mb-10">
+                <label for="userSearch"></label><input type="text" id="userSearch" placeholder="Rechercher un voyageur..." class="rounded-full p-4 shadow-lg w-full max-w-lg text-gray-700 focus:ring-2 focus:ring-blue-500 transition-all duration-300 ease-in-out">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-screen-xl bg-white shadow-xl rounded-xl p-6 overflow-hidden">
+                <!-- Les utilisateurs seront insérés ici -->
+            </div>
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/search.js') }}"></script>
+{% endblock %}

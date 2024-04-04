@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nous contacter{% endblock %}
+
+{% block body %}
+
+<main class="min-h-screen bg-gradient-to-r from-green-400 to-blue-500">
+    <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
+        <img class="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded" alt="hero" src="{{ asset('images/ORizon2.png') }}">
+        <div class="text-center lg:w-2/3 w-full">
+            <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">Nous Contacter</h1>
+            <p class="mb-8 leading-relaxed text-white">Une question, un soucis avec votre voyage, alors n'hésitez pas à nous contacter</p>
+        </div>
+    </div>
+	<div class="min-h-screen bg-gradient-to-r from-green-400 to-blue-500">
+		<div class="max-w-4xl mx-auto">
+			<div class="flex flex-wrap -mx-3">
+				<div class="w-full px-3 mb-6">
+					<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+						{{ form_start(form, {'attr': {'class': ''}}) }}
+
+					<div class="mb-4">
+						{{ form_label(form.prenom, 'Prénom', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+						{{ form_widget(form.prenom, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline', 'style': 'border-color: #4FD1C5;'}}) }}
+					</div>
+
+					<div class="mb-4">
+						{{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+						{{ form_widget(form.nom, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline', 'style': 'border-color: #4FD1C5;'}}) }}
+					</div>
+
+					<div class="mb-4">
+						{{ form_label(form.email, 'Email', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+						{{ form_widget(form.email, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline', 'style': 'border-color: #4FD1C5;'}}) }}
+					</div>
+
+					<div class="mb-6">
+						{{ form_label(form.message, 'Message', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+						{{ form_widget(form.message, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline', 'style': 'border-color: #4FD1C5; height: 150px;'}}) }}
+					</div>
+
+					<div class="flex justify-center mt-8">
+						<button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+							Envoyer
+						</button>
+					</div>
+
+					{{ form_end(form) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+
+{% endblock %}

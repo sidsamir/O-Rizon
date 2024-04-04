@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Participants au voyage {{ trip.title }}{% endblock %}
+
+{% block body %}
+
+    <!-- Section En-tête avec Dégradé de Fond -->
+    <div class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-8">
+        <div class="container mx-auto px-4">
+            <h1 class="text-center text-5xl font-bold">Participants au voyage {{ trip.title }}</h1>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Informations sur le leader du voyage -->
+        <div class="bg-white rounded-lg shadow-xl mb-8 p-6 text-center">
+            <h2 class="text-3xl font-bold text-green-600 mb-4">Leader du voyage</h2>
+            <p class="text-xl text-gray-600">
+                <img src="https://i.pravatar.cc/150?u={{ trip.creator.id }}" alt="Avatar" class="inline-block h-10 w-10 rounded-full mr-2">
+                {{ trip.creator.firstname }} {{ trip.creator.lastname }}
+            </p>
+        </div>
+
+        <!-- Liste des participants au voyage -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {% for participant in trip.participants %}
+                <div class="bg-white rounded-lg shadow-xl p-6 flex items-center">
+                    <img src="https://i.pravatar.cc/150?u={{ participant.id }}" alt="Avatar" class="h-10 w-10 rounded-full mr-4">
+                    <h3 class="text-2xl font-bold text-gray-800">{{ participant.firstname }} {{ participant.lastname }}</h3>
+                </div>
+            {% else %}
+                <p class="text-center text-gray-500 col-span-full">Aucun autre participant enregistré.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Bouton pour retourner au tableau de bord du voyage -->
+        <div class="flex justify-center mt-8">
+            <a href="{{ path('app_trip_board', {'id': trip.id}) }}" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-full">Retour au tableau de bord</a>
+        </div>
+    </div>
+{% endblock %}

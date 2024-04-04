@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-10">
+		<div class="container mx-auto text-center">
+			<h1 class="text-5xl font-bold mb-4">Posts du Voyage</h1>
+			<p class="text-xl">Découvrez les dernières activités et posts liés au voyage</p>
+		</div>
+	</div>
+
+	<div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+		{% if posts|length > 0 %}
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+				{% for post in posts %}
+					<div class="bg-white rounded-lg shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
+						<img class="w-full h-48 object-cover" src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.title }}">
+						<div class="p-6">
+							<h3 class="text-2xl font-semibold mb-2">{{ post.title }}</h3>
+							<p class="text-gray-700 mb-4">{{ post.summary }}</p>
+							<div class="flex items-center mb-4">
+								<span class="bg-green-100 text-green-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">{{ post.city }}</span>
+								<span class="bg-blue-100 text-blue-800 text-sm font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">{{ post.date ? post.date|date('d-m-Y') : 'Date non spécifiée' }}</span>
+							</div>
+							<a href="{{ path('app_post_show', {'id': post.id}) }}" class="text-blue-600 hover:text-blue-800 transition-colors duration-300">Voir plus →</a>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% else %}
+			<div class="text-center py-10">
+				<p class="text-gray-600 text-xl">Aucun post trouvé pour ce voyage.</p>
+				<a href="#" class="mt-6 inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">Créer un Nouveau Post</a>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

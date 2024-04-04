@@ -1,0 +1,241 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Trip{% endblock %}
+
+{% block body %}
+{% if trip.status != "Terminé" %}
+    <div class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-12">
+        <div class="container mx-auto text-center">
+            <h1 class="text-6xl font-bold">{{ trip.title }}</h1>
+        </div>
+    </div>
+{% else %}
+<div class="bg-gradient-to-r from-red-400 to-blue-500 text-white py-12">
+    <div class="container mx-auto text-center">
+        <h1 class="text-6xl font-bold">{{ trip.title }} terminé</h1>
+    </div>
+</div>
+{% endif %}
+
+{# TODO Ajoute {{ vich_uploader_asset(trip, 'imageFile') }} si on veux voir les photos upload la les photos son chargé par les fixtures #}
+
+    <div class="container mx-auto my-12 px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap -mx-4">
+            <div class="w-full lg:w-1/2 px-4 mb-8 lg:mb-0">
+                <img src="{{ trip.imageName }}" alt="Image de {{ trip.title }}" class="rounded-lg shadow-lg">
+            </div>
+            <div class="w-full lg:w-1/2 px-4">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-3xl font-semibold text-green-600 mb-4">À propos du voyage</h2>
+                    <p class="text-gray-600 mb-6">{{ trip.description }}</p>
+                    <dl class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-800">
+                        <div><dt class="font-bold">Budget:</dt><dd>{{ trip.budget }} €</dd></div>
+                        <div><dt class="font-bold">Ville:</dt><dd>{{ trip.city }}</dd></div>
+                        <div><dt class="font-bold">Pays:</dt><span class="flag-icon flag-icon-{{ trip.country | lower }}"></span><dd>{{ trip.country | country_name }}</dd></div>
+                        <div><dt class="font-bold">Statut:</dt><dd>{{ trip.status }}</dd></div>
+                        <div><dt class="font-bold">Adresse:</dt><dd>{{ trip.address }}</dd></div>
+                        <div><dt class="font-bold">Date:</dt><dd>{{ trip.date ? trip.date|date('Y-m-d') : '' }}</dd></div>
+                    </dl>
+
+            {% if trip.creator is not null and trip.creator.id == app.user.id %}
+                {% if trip.status != "Terminé" %}
+                    <div class="mt-6">
+                        <a href="{{ path('app_trip_edit', {'id': trip.id}) }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">
+                            Modifier le voyage
+                        </a>
+                        {{ include('front/trip/_delete_form.html.twig') }}
+                    </div>
+                {% endif %}
+            {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Affichage des posts du voyage -->
+        {% if posts is not empty %}
+            <div class="mt-12">
+                <h2 class="text-3xl font-semibold text-green-600 mb-4">Posts</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {% for post in posts|slice(0, 4) %}
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img src="{{ post.imageName }}" alt="{{ post.title }}" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-xl font-semibold">{{ post.title }}</h3>
+                                <p class="mt-2 text-gray-600">{{ post.summary }}</p>
+                                {% if post.budget != 0 %}
+								<span class="inline-block bg-green-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{ post.budget }} €</span>
+							    {% endif %}
+                                <!-- Affichage des votes -->
+                                <div class="vote-container flex items-center mt-4">
+                                    <button class="vote-btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-l focus:outline-none focus:shadow-outline" data-post-id="{{ post.id }}" data-vote-type="up">+</button>
+                                    <span id="post-vote-{{ post.id }}" class="px-4 py-2 bg-white text-sm font-medium text-gray-800">{{ post.vote }}</span>
+                                    <button class="vote-btn bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-r focus:outline-none focus:shadow-outline" data-post-id="{{ post.id }}" data-vote-type="down">-</button>
+                                </div>
+                                <a href="{{ path('app_post_show', {'id': post.id}) }}" class="mt-4 inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700">
+                                    Voir plus
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if posts|length > 4 %}
+                 <div class="flex justify-center mt-8">
+                    <a href="{{ path('app_trip_posts', {'id': trip.id}) }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">
+                        Voir tous les posts
+                    </a>
+                </div>
+                {% else %}
+                    {% if trip.status != "Terminé" %}
+                    <div class="flex justify-center mt-8">
+                        <a href="{{ path('app_post_new', {'id': trip.id}) }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">
+                            Créer un nouveau post
+                        </a>
+                    </div>
+                    {% endif %}
+                {% endif %}
+        {% else %}
+        <div class="flex flex-col items-center py-4 border-b">
+        <p class="text-gray-500 text-lg mb-2">
+            {% if trip.status == "Terminé" %}
+                Il n'y a pas eu de post dans ce voyage.
+            {% else %}
+                Il n'y a pas encore de post dans ce voyage :(
+            {% endif %}
+        </p>
+        {% if trip.status != "Terminé" %}
+            <a href="{{ path('app_post_new', {'id': trip.id}) }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">Soyez le premier !</a>
+        {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="flex flex-wrap -mx-4 mt-4">
+            <!-- Checklist à gauche -->
+            <div class="w-full lg:w-1/2 px-4 mb-8 lg:mb-0">
+        {% if checklists is not empty %}
+            {% if trip.status != 'Terminé' %}
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-3xl font-semibold text-green-600 mb-4">Checklist</h2>
+                    <!-- Affichage de la checklist du voyage -->
+                <!-- Affichage de la checklist du voyage -->
+                <div class="max-w-screen-xl bg-white shadow-md rounded-xl overflow-hidden my-2 p-6">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Tâche
+                                </th>
+                                <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    État
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for checklist in checklists %}
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ checklist.task }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap cursor-pointer">
+                                        <div class="toggle-state" data-id="{{ checklist.id }}" data-check-url="{{ asset('images/check.png') }}" data-uncheck-url="{{ asset('images/uncheck.png') }}">
+                                            <img src="{{ checklist.state == 0 ? asset('images/uncheck.png') : asset('images/check.png') }}"
+                                                alt="{{ checklist.state == 0 ? 'Pas encore fait' : 'Fait' }}"
+                                                class="w-6 h-6">
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if trip.creator is not null and trip.creator.id == app.user.id %}
+                        <div class="flex justify-center items-center">
+                            <a href="{{ path('app_trip_checklists', {'id': trip.id}) }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">Modifier la checklist</a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            <!-- Aucune checklist disponible -->
+            <div class="flex flex-col items-center py-4 border-b">
+                <p class="text-gray-500 text-lg mb-2">La checklist pour ce voyage n'est pas disponible pour le moment.</p>
+                {% if trip.status != "Terminé" %}
+                    {% if trip.creator is not null and trip.creator.id == app.user.id %}
+                        <div class="flex justify-center items-center">
+                            <a href="{{ path('app_trip_checklists', {'id': trip.id}) }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">Modifier la checklist</a>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endif %}
+                </div>
+            </div>
+            <!-- Liste des participants à droite -->
+            <div class="w-full lg:w-1/2 px-4">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-3xl font-semibold text-green-600 mb-4">Participants</h2>
+                    <ul>
+                        <!-- Créateur du voyage avec image -->
+                        <li>
+                            <img src="https://i.pravatar.cc/150?u={{ trip.creator.id }}" alt="Avatar" class="inline-block h-6 w-6 rounded-full mr-2">
+                            <a href="{{ path('app_user_show', {'id': trip.creator.id}) }}">{{ trip.creator.firstname }} {{ trip.creator.lastname }}</a>
+                        </li>
+                        {% for participant in trip.participants %}
+                            <!-- Participant avec image -->
+                            <li>
+                                <img src="https://i.pravatar.cc/150?u={{ participant.id }}" alt="Avatar" class="inline-block h-6 w-6 rounded-full mr-2">
+                                <a href="{{ path('app_user_show', {'id': participant.id}) }}">{{ participant.firstname }} {{ participant.lastname }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="mt-6">
+                        <a href="{{ path('app_trip_participant', {'id': trip.id}) }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">
+                            Voir les participants
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste des reviews -->
+            {% if trip.status == 'Terminé' %}
+        {% if reviews is not empty %}
+                <h2 class="text-3xl font-semibold text-green-600 mb-4 text-center mt-4">Reviews</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {% for review in reviews|slice(0, 6) %}
+                        <div class="overflow-hidden bg-white rounded-lg shadow-xl">
+                            <div class="px-6 py-4">
+                                <div class="font-bold text-xl mb-2">{{ review.title }}</div>
+                                <p class="text-gray-700 text-base">{{ review.summary }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if reviews|length > 6 %}
+                    <div class="flex justify-center mt-6">
+                        <a href="{{ path('app_trip_review', {'id': trip.id}) }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">
+                            Voir plus
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="flex justify-center mt-6">
+                        <a href="{{ path('app_front_review_new', {'id': trip.id}) }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">
+                            Nouvelle Review
+                        </a>
+                    </div>
+                {% endif %}
+            
+        {% else %}
+            <div class="bg-white rounded-lg shadow-lg p-6 mt-8 flex flex-col items-center">
+                <p class="text-gray-700 text-lg mb-4">Il n'y a pas eu de review pour ce voyage :(</p>
+                <a href="{{ path('app_front_review_new', {'id': trip.id}) }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">
+                    Soyez le premier !
+                </a>
+            </div>
+        {% endif %}
+    {% endif %}
+    </div>
+        {% endblock %}
+
+
+
+{% block javascripts %}
+    <script src="{{ asset('js/votePost.js') }}"></script>
+{% endblock %}

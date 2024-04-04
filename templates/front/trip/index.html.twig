@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Voyages{% endblock %}
+
+{% block body %}
+
+	<!-- Section En-tête avec Dégradé de Fond -->
+	<div class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-8">
+		<h1 class="text-center text-5xl font-bold">Liste des Voyages</h1>
+	</div>
+
+	<!-- Section des Cartes de Voyage -->
+	<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+		<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+			{% for trip in trips %}
+				<div class="bg-white rounded-lg shadow-xl overflow-hidden">
+					<img class="w-full h-48 object-cover" src="{{ vich_uploader_asset(trip, 'imageFile') }}" alt="{{ trip.title }}">
+					<div class="p-6">
+						<h2 class="font-bold text-xl mb-2">{{ trip.title }}</h2>
+						<p class="text-gray-700 text-base mb-4">{{ trip.description }}</p>
+						<div class="flex items-center justify-between">
+							<span class="inline-block bg-green-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{ trip.city }}</span>
+							<span class="inline-block bg-green-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{ trip.date ? trip.date|date('Y-m-d') : '' }}</span>
+						</div>
+						<div class="flex mt-4">
+							<a href="{{ path('app_trip_show', {'id': trip.id}) }}" class="text-green-500 hover:text-green-800 mr-4">Voir plus</a>
+							<a href="{{ path('app_trip_edit', {'id': trip.id}) }}" class="text-green-500 hover:text-green-800">Modifier</a>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<div class="mx-auto">
+					<p class="text-center text-gray-500">Aucun voyage trouvé.</p>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+	<!-- Bouton pour Créer un Nouveau Voyage -->
+	<div class="flex justify-center mt-8">
+		<a href="{{ path('app_trip_new') }}" class="bg-green-500 hover:bg-green-700 text-white py-2 px-6 rounded-full transition-colors duration-150">Nouveau Voyage !</a>
+	</div>
+{% endblock %}

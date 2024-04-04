@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <meta name="friend-id" content="{{ app.user.id }}">
+    {% endif %}
+
+
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+        <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    {% endblock %}
+    {% block javascripts %}
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+             <script src="{{ asset('js/modalChecklist.js') }}"></script>
+    {% endblock %}
+
+
+</head>
+<body data-user-id="{{ app.user ? app.user.id : '' }}">
+
+{% block header %}
+    {% include ('component/_nav.html.twig') %}
+{% endblock %}
+{% block body %}
+{% endblock %}
+
+{% block footer %}
+    {% include ('component/_footer.html.twig') %}
+{% endblock %}
+
+
+</body>
+</html>

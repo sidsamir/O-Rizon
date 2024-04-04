@@ -1,0 +1,31 @@
+{{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
+
+{{ form_row(form.title, {'label_attr': {'class': 'block text-base font-medium mb-1'},
+                        'attr': {'placeholder': 'Titre du post', 'class': 'w-full ml-2 placeholder-gray-400 border-2 border-gray-300 focus:border-green-500 focus:outline-none rounded-md p-2'}}) }}
+
+{{ form_row(form.summary, {'label_attr': {'class': 'block text-base font-medium mb-1'},
+                        'attr': {'placeholder': 'Résumé', 'class': 'w-full ml-2 placeholder-gray-400 border-2 border-gray-300 focus:border-green-500 focus:outline-none rounded-md p-2'}}) }}
+
+{{ form_row(form.budget, {'label_attr': {'class': 'block text-base font-medium mb-1'},
+                        'attr': {'placeholder': 'Prix', 'class': 'w-full ml-2 placeholder-gray-400 border-2 border-gray-300 focus:border-green-500 focus:outline-none rounded-md p-2'}}) }}
+
+{{ form_row(form.imageFile, {'label_attr': {'class': 'block text-base font-medium mb-1'},
+                        'attr': {'placeholder': 'Image', 'class': 'w-full ml-2 placeholder-gray-400 border-2 border-gray-300 focus:border-green-500 focus:outline-none rounded-md p-2'}}) }}
+
+{{ form_row(form.city, {'label_attr': {'class': 'block text-base font-medium mb-1'},
+                        'attr': {'placeholder': 'Ville', 'class': 'w-full ml-2 placeholder-gray-400 border-2 border-gray-300 focus:border-green-500 focus:outline-none rounded-md p-2'}}) }}
+
+{{ form_row(form.address, {'label_attr': {'class': 'block text-base font-medium mb-1'},
+                        'attr': {'placeholder': 'Adresse', 'class': 'w-full ml-2 placeholder-gray-400 border-2 border-gray-300 focus:border-green-500 focus:outline-none rounded-md p-2'}}) }}
+
+{{ form_row(form.date, {'label_attr': {'class': 'block text-base font-medium mb-1'},
+                        'attr': {'placeholder': 'Date de la sortie', 'class': 'w-full ml-2 placeholder-gray-400 border-2 border-gray-300 focus:border-green-500 focus:outline-none rounded-md p-2'}}) }}
+
+
+<div class="flex justify-center items-center">
+	<button type="submit" class="flex center-item bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-full mt-8 mb-2 text-xl pl-20 pr-20">
+		{{ button_label|default('Poster') }}
+	</button>
+</div>
+
+{{ form_end(form) }}

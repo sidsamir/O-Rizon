@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Voyages{% endblock %}
+
+{% block body %}
+
+<div class="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white py-10">
+    <h1 class="text-center text-6xl font-bold">Mes Voyages</h1>
+    <p class="mt-4 text-center text-xl">Découvrez les voyages auxquels vous êtes invité et participez.</p>
+</div>
+
+<div class="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {% set statuses = {'Terminé': 'Voyages Passés', 'En cours': 'Voyages En Cours', 'Future': 'Voyages Futurs'} %}
+        {% for status, title in statuses %}
+            <div class="bg-white rounded-lg shadow-xl p-6">
+                <h2 class="text-2xl font-bold mb-4 {{ loop.index == 1 ? 'text-green-600' : loop.index == 2 ? 'text-blue-600' : 'text-purple-600' }}">{{ title }}</h2>
+                {% set filteredTrips = invitedTrips|filter(trip => trip.status == status) %}
+                {% if filteredTrips|length == 0 %}
+                    <p class="text-gray-600">Aucun voyage {{ status|lower }} pour le moment.</p>
+                {% else %}
+                    <ul class="space-y-4">
+                        {% for trip in filteredTrips %}
+                            <li>
+                                <a href="{{ path('app_trip_board', {'id': trip.id}) }}" class="flex items-center space-x-4 hover:text-{{ loop.parent.loop.index == 1 ? 'green-500' : loop.parent.loop.index == 2 ? 'blue-500' : 'purple-500' }}">
+                                    <img src="{{ vich_uploader_asset(trip, 'imageFile') }}" alt="{{ trip.title }}" class="w-16 h-16 object-cover rounded-full">
+                                    <div>
+                                        <h3 class="text-lg font-semibold">{{ trip.title }}</h3>
+                                        <p class="text-sm text-gray-600">{{ trip.description|slice(0, 50) }}...</p>
+                                    </div>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="text-center mt-12">
+        <a href="{{ path('app_trip_new') }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">Créer un nouveau voyage</a>
+    </div>
+</div>
+
+{% endblock %}

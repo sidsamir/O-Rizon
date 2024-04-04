@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du checklist{% endblock %}
+
+{% block body %}
+
+    <!-- Titre de la page listant les articles -->
+    <div class="flex justify-center items-center bg-green-100 pt-4 pb-6">
+        <h1 class="text-4xl font-bold text-green-500 sm:text-4xl">Détails du checklist</h1>
+    </div>
+
+    <!-- Contenu de la page -->
+    <div class="flex flex-col mx-auto max-w-screen-xl px-4 py-16 mt-4 sm:px-6 lg:px-8 overflow-hidden bg-white rounded-lg shadow-xl">
+        <!-- Affichage des détails du checklist -->
+        <div class="p-6 bg-white border-b border-gray-200">
+            <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-8">
+                <div class="sm:col-span-1">
+                    <dt class="font-medium text-gray-500">Id :</dt>
+                    <dd class="mt-1 text-gray-900">{{ checklist.id }}</dd>
+                </div>
+                <div class="sm:col-span-1">
+                    <dt class="font-medium text-gray-500">Task :</dt>
+                    <dd class="mt-1 text-gray-900">{{ checklist.task }}</dd>
+                </div>
+                <div class="sm:col-span-1">
+                    <dt class="font-medium text-gray-500">State :</dt>
+                    <dd class="mt-1 text-gray-900">{{ checklist.state ? 'Yes' : 'No' }}</dd>
+                </div>
+                <div class="sm:col-span-1">
+                    <dt class="font-medium text-gray-500">Property :</dt>
+                    <dd class="mt-1 text-gray-900">{{ checklist.property }}</dd>
+                </div>
+                <div class="sm:col-span-1">
+                    <dt class="font-medium text-gray-500">Créé le :</dt>
+                    <dd class="mt-1 text-gray-900">{{ checklist.createdAt ? checklist.createdAt|date('Y-m-d H:i:s') : '' }}</dd>
+                </div>
+                <div class="sm:col-span-1">
+                    <dt class="font-medium text-gray-500">Mis à jour le :</dt>
+                    <dd class="mt-1 text-gray-900">{{ checklist.updatedAt ? checklist.updatedAt|date('Y-m-d H:i:s') : '' }}</dd>
+                </div>
+            </dl>
+
+            <!-- Liens de navigation -->
+            <div class="flex justify-center items-center mt-8">
+                <a href="{{ path('app_checklist_edit', {'id': checklist.id}) }}" class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-full mt-4 mb-2 text-xl">Modifier</a>
+                {{ include('front/checklist/_delete_form.html.twig') }}
+                <a href="{{ path('app_checklist_index') }}" class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-full mt-4 mb-2 text-xl">Retour à la liste</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

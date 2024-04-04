@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Voyage{% endblock %}
+
+{% block body %}
+    <!-- Section Titre avec Dégradé de Fond -->
+    <div class="bg-gradient-to-r from-green-400 via-green-500 to-blue-500 text-white py-8">
+        <h1 class="text-center text-5xl font-bold">Créez votre voyage</h1>
+    </div>
+
+    <!-- Conteneur Principal -->
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Carte pour le Formulaire -->
+        <div class="bg-white rounded-lg shadow-xl p-6 md:p-12">
+            <h2 class="text-3xl font-bold mb-6">Détails du voyage</h2>
+            {{ include('front/trip/_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

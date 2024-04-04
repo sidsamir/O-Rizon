@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Posts du voyage {{ trip.title }}{% endblock %}
+
+{% block body %}
+
+	<!-- Section En-tête avec Dégradé de Fond -->
+	<div class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-8">
+		<div class="container mx-auto px-4">
+			<h1 class="text-center text-5xl font-bold">Posts du voyage {{ trip.title }}</h1>
+		</div>
+	</div>
+
+	<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+		<!-- Liste des posts associés à ce voyage -->
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+			{% for post in posts %}
+				<div class="bg-white rounded-lg shadow-xl overflow-hidden">
+					<img class="w-full h-60 object-cover" src="{{ post.imageName }}" alt="{{ post.title }}">
+					<div class="p-6">
+						<h2 class="font-bold text-xl mb-2">{{ post.title }}</h2>
+						<p class="text-gray-700 text-base mb-4">{{ post.summary }}</p>
+						<div class="flex items-center justify-between">
+							<span class="inline-block bg-green-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{ post.city }}</span>
+							<span class="inline-block bg-green-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{ post.date ? post.date|date('d-m-Y') : '' }}</span>
+							{% if post.budget != 0 %}
+								<span class="inline-block bg-green-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{ post.budget }} €</span>
+							{% endif %}
+							<!-- Affichage des votes -->
+							<div class="vote-container flex items-center mt-4">
+								<button class="vote-btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-l focus:outline-none focus:shadow-outline" data-post-id="{{ post.id }}" data-vote-type="up">+</button>
+								<span id="post-vote-{{ post.id }}" class="px-4 py-2 bg-white text-sm font-medium text-gray-800">{{ post.vote }}</span>
+								<button class="vote-btn bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-r focus:outline-none focus:shadow-outline" data-post-id="{{ post.id }}" data-vote-type="down">-</button>
+							</div>
+							<a href="{{ path('app_post_show', {'id': post.id}) }}" class="mt-4 inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700">
+                                    Voir plus
+                            </a>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<p class="text-center text-gray-500 col-span-full">Aucun post trouvé.</p>
+			{% endfor %}
+		</div>
+
+		{% if trip.status != "Terminé" %}
+			<!-- Bouton pour ajouter un nouveau post -->
+			<div class="flex justify-center mt-8">
+				<a href="{{ path('app_post_new', {'id': trip.id}) }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">Nouveau Post</a>
+			</div>
+		{% endif %}
+
+		<!-- Bouton de retour au tableau de bord du voyage -->
+		<div class="flex justify-center mt-4">
+			<a href="{{ path('app_trip_board', {'id': trip.id}) }}" class="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-800">Retour au tableau de bord</a>
+		</div>
+	</div>
+{% endblock %}

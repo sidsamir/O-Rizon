@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<!-- Titre de la page listant les articles -->
+	<div class="flex flex-col justify-center items-center bg-green-100 pt-4 pb-6 mb-4">
+		<h1 class="text-4xl font-bold text-green-500 sm:text-4xl mb-8">Checklist du voyage</h1>
+		<h2 class="text-xl text-green-500 mb-4">Liste des checklist</h2>
+	</div>
+
+	<!-- Cartes affichant les détails des articles -->
+	<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6 mx-6">
+		{% for checklist in checklists %}
+			<div class="overflow-hidden bg-white rounded-b-lg shadow-xl">
+				<div class="px-6 py-4">
+					<div class="font-bold text-xl mb-2">{{ checklist.task }}</div>
+					<p class="text-gray-700 text-base">{{ checklist.state }}</p>
+				</div>
+				<div class="px-6 py-4">
+					<span class="inline-block bg-green-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{{ checklist.property }}</span>
+					<span class="inline-block bg-green-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{{ checklist.createdAt ? checklist.createdAt|date('Y-m-d H:i:s') : '' }}</span>
+				</div>
+				<div class="px-6 py-4">
+					<a href="{{ path('app_checklist_show', {'id': checklist.id}) }}" class="text-green-500 hover:text-green-800">Voir plus</a>
+					<a href="{{ path('app_checklist_edit', {'id': checklist.id}) }}" class="text-green-500 hover:text-green-800 ml-2">Modifier</a>
+				</div>
+			</div>
+		{% else %}
+			<!-- Affiche un message si aucun enregistrement n'est trouvé -->
+			<p>No records found</p>
+		{% endfor %}
+	</div>
+
+	<!-- Lien pour créer un nouvel article -->
+	<div class="flex justify-center items-center">
+		<button type="submit" class="flex center-item bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-full mt-8 mb-2 text-xl pl-20 pr-20">
+			<a href="{{ path('app_checklist_new') }}">Nouvelle Checklist</a>
+		</button>
+	</div>
+
+{% endblock %}
